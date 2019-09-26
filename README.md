@@ -35,5 +35,5 @@ This app shows colour-coded congestion levels around the main motorways in Auckl
 * Auto-updater that refreshes the congestion status every 90 seconds when clicked.
 ![5](https://user-images.githubusercontent.com/45221821/65652580-580c5500-e066-11e9-9c4d-afdae44f7f04.PNG)
 <br/><br/><br/>
-* Links to NZTA and the Safer Journeys strategy websites.
+* Links to NZTA and the Safer Journeys strategy websites. [What is Safer Journeys?](https://www.saferjourneys.govt.nz/about-safer-journeys/)
 ![6](https://user-images.githubusercontent.com/45221821/65652667-9c97f080-e066-11e9-823a-d501eeea6833.PNG)
