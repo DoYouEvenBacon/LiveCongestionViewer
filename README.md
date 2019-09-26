@@ -18,3 +18,10 @@ This app shows colour-coded congestion levels around the main motorways in Auckl
 * The app shows colour-coded congestion lines on the map and camera locations when the 'Show Cameras and Congestion' button is clicked. There is a button for an automatic congestion update every 90 seconds.
 * Clicking on the camera icons brings up a popup showing the latest traffic camera image as well as congestion conditions on that part of the road (in both directions where applicable).
 * This app has a real-time location tracker that when clicked will continuously track the user's location until they toggle it off.
+
+## Images of the Web App
+- The initial view of the web app
+![1](https://user-images.githubusercontent.com/45221821/65651692-58572100-e063-11e9-8dad-ba0979fb8417.PNG)
+<br/><br/><br/>
+* Track the user's location in real-time even when on the move.
+![2](https://user-images.githubusercontent.com/45221821/65652314-6dcd4a80-e065-11e9-80ee-8cb45918103b.PNG)
