@@ -31,3 +31,9 @@ This app shows colour-coded congestion levels around the main motorways in Auckl
 <br/><br/>
 * Click on a camera to show current traffic image and status.
 ![4](https://user-images.githubusercontent.com/45221821/65652459-fa780880-e065-11e9-9cea-afa0a07607ba.PNG)
+<br/><br/>
+* Auto-updater that refreshes the congestion status every 90 seconds when clicked.
+![5](https://user-images.githubusercontent.com/45221821/65652580-580c5500-e066-11e9-9c4d-afdae44f7f04.PNG)
+<br/><br/><br/>
+* Links to NZTA and the Safer Journeys strategy websites.
+![6](https://user-images.githubusercontent.com/45221821/65652667-9c97f080-e066-11e9-823a-d501eeea6833.PNG)
