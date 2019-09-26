@@ -5,7 +5,7 @@ Following on from my LiveBusTracker app, I built this app using the same base. I
 
 This app shows colour-coded congestion levels around the main motorways in Auckland, as well as live images of certain parts of the motorway where there are traffic cameras. It also includes a live location tracker instead of a static one because of the possible uses on the road for this app.
 
-Disclaimer:
+Disclaimer:<br/>
 Please take care on the road, especially if you plan to use this app.
 <br/>
 [About Safer Journeys.](https://www.saferjourneys.govt.nz/about-safer-journeys/)
