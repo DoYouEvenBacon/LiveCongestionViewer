@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>NZTA Live Congestion Viewer</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+		<meta charset="utf-8">
+		<script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script>
+		<style>
+			html {
+				height: 100%;
+			}
+			body {
+				background-color: #2D2D2D;
+				font-family: arial;
+				height: 100%;
+				margin: 0;
+			}
+		
+			#sideBox {
+				height: 99.78%;
+				width: 350px;
+				background-color: #f2f2f2;
+				border: 1px solid #ccc;
+				position: absolute;
+				overflow-y: auto;
+				z-index: 50;
+				display: block;
+			}
+			#sideBox_toggle {
+				margin-left: 351px;
+				position: absolute;
+				margin-top: 5px;
+				width: 40px;
+				height: 60px;
+				line-height: 60px;
+				background-color: #f2f2f2;
+				border: 1px solid #ccc;
+				cursor: pointer;
+				text-align: center;
+				z-index: 50;
+			}
+			#sideBox_toggle:hover {
+				color: #f2f2f2;
+				background-color: black;
+				transition-duration: 0.25s;
+			}
+			#sideBox_header {
+				display: flex;
+			    margin: 0 7px;
+				border-bottom: 1px solid #d7dae0;
+				text-align: center;
+			}
+			#headerTitle {
+				display: flex;
+				width: 90%;
+				font-size: larger;
+			}
+			#headerAbout {
+				display: flex;
+				align-items: center;
+				text-decoration: none;
+				color: #000;
+			}
+			#headerAbout:hover {
+				color: #c3c3c3;
+				cursor: pointer;
+			}
+			#logosContainer {
+				margin: 0 7px;
+			    border-top: 1px solid #d7dae0;
+				text-align: center;
+			}
+			
+			.sideBoxElement {
+				background-color: #fff;
+				box-shadow: 0 2px 4px rgba(0,0,0,.3);
+				border-radius: 2px;
+				text-align: center;
+				margin: 10px auto;
+				padding: 10px;
+				min-height: 100px;
+				width: 90%;
+			}
+			.sideBox_loader {
+				border: 5px solid #f3f3f3;
+				animation: spin 1s cubic-bezier(0.15, 0.6, 1, 1) infinite;
+				border-top: 5px solid #555;
+				border-radius: 50%;
+				width: 25px;
+				height: 25px;
+				margin: auto;
+				display: none;
+			}
+			@keyframes spin {
+				0% { transform: rotate(0deg); }
+				100% { transform: rotate(360deg); }
+			}		
+			
+			button {
+				padding: 10px 20px;
+				background-color: #003B5C;
+				color: #fff;
+				border: 2px solid #003B5C;
+				transition-duration: 0.25s;
+			}
+			button:hover {
+				cursor: pointer;
+				background-color: #fff;
+				color: #003B5C;
+			}
+			button:disabled {
+				cursor: default;
+				pointer-events: none;
+				opacity: 0.4;
+			}
+			#clearLocationsButton, #autoUpdateButton {
+				margin-top: 5px
+			}
+			
+			input {
+				padding: 10px 5px;
+			}
+			input:focus {
+				outline: none;
+			}
+			input:hover {
+				border: 2px solid #bbbbbb;
+			}
+			
+			#mapContainer {
+				height: 100%;
+				width: 100%;
+			}
+			
+			.ol-popup {
+				position: absolute;
+				background-color: white;
+				-webkit-filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
+				filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
+				padding: 15px;
+				border-radius: 10px;
+				border: 1px solid #cccccc;
+				/*bottom: 12px;*/
+				left: -50px;
+				min-width: 350px;
+			}
+		    .ol-popup:after, .ol-popup:before {
+				/*top: 100%;*/
+				border: solid transparent;
+				content: " ";
+				height: 0;
+				width: 0;
+				position: absolute;
+				pointer-events: none;
+		    }
+		    .ol-popup:after {
+				border-top-color: white;
+				border-width: 10px;
+				left: 48px;
+				margin-left: -10px;
+		    }
+		    .ol-popup:before {
+				border-top-color: #cccccc;
+				border-width: 11px;
+				left: 48px;
+				margin-left: -11px;
+		    }
+			.ol-popup-closer {
+				color: #c3c3c3;
+				text-decoration: none;
+				float: right;
+			}
+			#cameraPopup {
+				bottom: 12px;
+			}			
+			#cameraPopup:after, #cameraPopup:before {
+				bottom: 12px;
+				top: 100%;
+			}
+			#stopPopup {
+				top: 30px;
+			}			
+			#stopPopup:after {
+				top: -31%;
+				transform: rotate(180deg);
+			}
+			#stopPopup:before {
+				display: none;
+			}
+			
+			.map_loader {
+				border: 5px solid #f3f3f3;
+				animation: spin 1s cubic-bezier(0.15, 0.6, 1, 1) infinite;
+				border-top: 5px solid #555;
+				border-radius: 50%;
+				width: 50px;
+				height: 50px;
+				display: none;
+				z-index: 25;
+				position: absolute;
+				left: 50%;
+				top: 50%;
+			}
+			
+			#aboutBox {
+				display: none;
+				width: 400px;
+				height: 375px;
+				position: absolute;
+				top: 30%;
+				left: 45%;
+				z-index: 500;
+				background-color: #f2f2f2;
+				text-align: center;
+				padding: 10px;
+				
+			}
+			#aboutBox-closer {
+				font-size: large;
+				color: #c3c3c3;
+				text-decoration: none;
+				float: right;
+				cursor: pointer;
+			}
+			
+			.imageLink {
+				opacity: 0.6;
+				transition-duration: 0.25s;
+			}			
+			.imageLink:hover {
+				opacity: 1;
+			}
+			
+		</style>
+		<link rel="stylesheet" href="https://openlayers.org/en/v5.3.0/css/ol.css" type="text/css">
+	</head>
+	<body onload="createMap()">
+		<div id="overlay">
+			<div id="sideBox">
+				<div id ="sideBox_header">
+					<div id="headerTitle"><p>Live Congestion Viewer</p></div>
+					<div id="headerAbout" onclick="openAbout()"><p>About</p></div>
+				</div>
+				<div id="locationContainer" class="sideBoxElement">
+					<p><img src="https://upload.wikimedia.org/wikipedia/commons/0/0a/Marker_location.png" style="margin:auto;display:block" alt="Location Pin Icon">Toggle My Live Location</p>
+					<button id="userLocationButton" onclick="toggleUserLocation()">Start Tracking My Location</button>	
+				</div>
+				<div id="searchContainer" class="sideBoxElement">
+					<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Antu_folder-camera.svg/512px-Antu_folder-camera.svg.png" style="width:10%;height:auto;margin:auto;display:block" alt="Camera Icon">Live Camera and Congestion Viewer</p>
+					<div id="searchField">
+						<button id="searchButton" onclick="getFunctions()">Show Cameras and Congestion</button>
+						<button id="autoUpdateButton" onclick="toggleAutoUpdate()">Turn Congestion Update On (90s)</button>
+					</div>
+				</div>
+				<div id="logosContainer">
+					<a class="imageLink" href="https://www.nzta.govt.nz" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/NZTA_Logo_RGB.png/300px-NZTA_Logo_RGB.png" alt="NZTA Logo" style="margin:0% 0% 0% -3%;width:55%"></a>
+					<a class="imageLink" href="https://www.saferjourneys.govt.nz" target="_blank"><img src="https://www.saferjourneys.govt.nz/_resources/themes/saferjourneys/images/logo.png" alt="Safer Journeys Logo"></a>
+				</div>
+			</div>
+			<div id="sideBox_toggle" onclick="toggleSideBox()">&#9664;</div>
+			<div id="aboutBox">
+				<div id="aboutBox-closer" onclick="closeAbout()">✖</div>
+				<p><h2>About</h2></p>
+				<p>Made by <a href='https://github.com/DoYouEvenBacon'>GitHub/DoYouEvenBacon</a><br>2019  Alan J. Tan</p>
+				<p>A Web App that ... .</p>
+				<p><b>Powered by:</b><br><br><a class="imageLink" href="https://www.nzta.govt.nz" target="_blank"><img src="https://www.nzta.govt.nz/_resources/themes/default/dist/css/png/nzta-logo-coloured.png" alt="NZTA Logo"></a><br>
+				- <a href="https://www.nzta.govt.nz/traffic-and-travel-information/infoconnect-section-page/about-the-apis/" target="_blank">NZTA Auckland Traffic API</a> <a href="https://www.nzta.govt.nz/traffic-and-travel-information/infoconnect-section-page/terms-of-use/" target="_blank">(NZTA API Terms)</a><br>
+				- <a href="https://openlayers.org" target="_blank">OpenLayers</a> v5.3.0 provided under the BSD 2-clause license<br>
+				- <a href="https://www.openstreetmap.org/about" target="_blank">OpenStreetMap</a> 
+				<a href="https://wiki.osmfoundation.org/wiki/Terms_of_Use" target="_blank">(OSM API Terms)</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">Data is available under the Open Database Licence</a></p>
+			</div>
+		</div>
+		<div id="mapLoader" class="map_loader"></div>
+		<div id="mapContainer">
+		</div>
+		<div id="cameraPopup" class="ol-popup">
+			<a href="#" id="cameraPopup-closer" class="ol-popup-closer">✖</a>
+			<div id="cameraPopupContent">
+			</div>
+		</div>		
+	<script type="text/javascript" src="LiveCongestionViewer.js"></script>
+	</body>
+</html>
+  
