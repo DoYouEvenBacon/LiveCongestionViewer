@@ -35,6 +35,8 @@ Please take care on the road, especially if you plan to use this app.
 <br/><br/>
 * Click on a camera to show current traffic image and status.
 ![4](https://user-images.githubusercontent.com/45221821/65652459-fa780880-e065-11e9-9cea-afa0a07607ba.PNG)
+<br/>
+![4_x](https://user-images.githubusercontent.com/45221821/65652984-b7b73000-e067-11e9-99ec-b7bc085d127d.PNG)
 <br/><br/>
 * Auto-updater that refreshes the congestion status every 90 seconds when clicked.
 ![5](https://user-images.githubusercontent.com/45221821/65652580-580c5500-e066-11e9-9c4d-afdae44f7f04.PNG)
