@@ -25,3 +25,9 @@ This app shows colour-coded congestion levels around the main motorways in Auckl
 <br/><br/><br/>
 * Track the user's location in real-time even when on the move.
 ![2](https://user-images.githubusercontent.com/45221821/65652314-6dcd4a80-e065-11e9-80ee-8cb45918103b.PNG)
+<br/><br/><br/>
+* Show congestion lines and traffic camera locations.
+![3](https://user-images.githubusercontent.com/45221821/65652436-e2a08480-e065-11e9-98bd-247399f4ea81.PNG)
+<br/><br/>
+* Click on a camera to show current traffic image and status.
+![4](https://user-images.githubusercontent.com/45221821/65652459-fa780880-e065-11e9-9cea-afa0a07607ba.PNG)
