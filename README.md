@@ -1,5 +1,5 @@
 # LiveCongestionViewer
-This web app is powered by the Auckland Transport API provided by NZTA (New Zealand Transport Agency) and OpenLayers API which is based on OpenStreetMaps.
+This web app is powered by the Auckland Traffic API provided by NZTA (New Zealand Transport Agency) and OpenLayers API which is based on OpenStreetMaps.
 
 Following on from my LiveBusTracker app, I built this app using the same base. I reused code for the menu, map and popups hence why it bears a similar design to by bus tracker app.
 
